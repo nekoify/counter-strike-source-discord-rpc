@@ -3,7 +3,7 @@
 
 ### ONLY WORKS ON WINDOWS 
 <br/>
-  probably not enough err checking so open an issue if something bad happens
+make sure to run the exe AFTER cs:s has opened
 <br/>
 
 ## Screenshot
