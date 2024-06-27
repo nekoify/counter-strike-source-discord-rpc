@@ -37,12 +37,12 @@ func main() {
 
 	engineAddr, err := utils.GetModuleBaseAddress(pid, engineDll)
 	if err != nil {
-		panic(err)
+		fmt.Println(err)
 	}
 
 	clientAddr, err := utils.GetModuleBaseAddress(pid, clientDll)
 	if err != nil {
-		panic(err)
+		fmt.Println(err)
 	}
 
 	mapNameAddress := engineAddr + mapNameOffset
@@ -50,7 +50,7 @@ func main() {
 
 	errr := client.Login("1253060133940891789")
 	if errr != nil {
-		panic(errr)
+		fmt.Println(errr)
 	}
 
 	for true {

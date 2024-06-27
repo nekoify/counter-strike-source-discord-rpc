@@ -1,6 +1,7 @@
 package discordRPC
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/hugolgst/rich-go/client"
@@ -18,6 +19,6 @@ func Update(mapName string, serverName string, startTime time.Time) {
 	})
 
 	if err != nil {
-		panic(err)
+		fmt.Println(err)
 	}
 }

@@ -1,6 +1,8 @@
 package utils
 
 import (
+	"fmt"
+
 	"golang.org/x/sys/windows"
 )
 
@@ -12,11 +14,12 @@ func GetValueFromAddress(hProcess windows.Handle, baseAddress uintptr) string {
 	for i := 0; i < bufferSize; i++ {
 		err := windows.ReadProcessMemory(hProcess, baseAddress+uintptr(i), &buffer[i], 1, &bytesRead)
 		if err != nil {
-			panic(err)
+			fmt.Println(err)
 		}
 		if buffer[i] == 0 {
 			return string(buffer[:i])
 		}
 	}
-	panic("string too long to fit in buffer")
+	fmt.Println("string too long to fit in buffer")
+	return ""
 }
