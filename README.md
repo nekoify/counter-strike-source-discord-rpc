@@ -1,7 +1,5 @@
 # Counter Strike: Source Discord RPC
 
-### ONLY WORKS ON WINDOWS 
-
 ## Running automatically on CS:S launch
 Start by creating a batch file with the following contents (replacing the path with your own)
 ```bat
