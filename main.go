@@ -12,30 +12,29 @@ import (
 
 func main() {
 	startTime := time.Now()
-	const processName = "hl2.exe"
+	const processName = "cstrike_win64.exe"
 	const engineDll = "engine.dll"
 	const clientDll = "client.dll"
 
 	var mapName = "Placeholder"
 	var serverName = "Placeholder"
 
-	const mapNameOffset = 0x4779E8
-	const serverNameOffset = 0x50A214
+	const mapNameOffset = 0x6894D0
+	const serverNameOffset = 0x695EFC
 
 	pid, err := utils.GetProcessID(processName)
 	if err != nil {
 		fmt.Println("Error finding process:", err)
-		return
+
 	}
 
 	hProcess, err := windows.OpenProcess(windows.PROCESS_VM_READ|windows.PROCESS_QUERY_INFORMATION, false, pid)
 	if err != nil {
 		fmt.Println("Error opening process:", err)
-		return
+
 	}
 	defer windows.CloseHandle(hProcess)
-
-	engineAddr, err := utils.GetModuleBaseAddress(pid, engineDll)
+	//engineAddr, err := utils.GetModuleBaseAddress(pid, engineDll)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -45,7 +44,7 @@ func main() {
 		fmt.Println(err)
 	}
 
-	mapNameAddress := engineAddr + mapNameOffset
+	mapNameAddress := clientAddr + mapNameOffset
 	serverNameAddress := clientAddr + serverNameOffset
 
 	errr := client.Login("1253060133940891789")
@@ -53,12 +52,12 @@ func main() {
 		fmt.Println(errr)
 	}
 
-	for true {
+	for {
 		var shouldUpdate = false
 		pid, err := utils.GetProcessID(processName)
 		_ = pid
 		if err != nil {
-			panic(err)
+			fmt.Println(err)
 		}
 		mapVal := utils.GetValueFromAddress(hProcess, uintptr(mapNameAddress))
 		if mapVal != mapName && mapVal != "" {
