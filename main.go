@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"main/discordRPC"
 	"main/utils"
 	"time"
@@ -57,7 +58,8 @@ func main() {
 		pid, err := utils.GetProcessID(processName)
 		_ = pid
 		if err != nil {
-			fmt.Println(err)
+			log.Fatal(err)
+			return
 		}
 		mapVal := utils.GetValueFromAddress(hProcess, uintptr(mapNameAddress))
 		if mapVal != mapName && mapVal != "" {
