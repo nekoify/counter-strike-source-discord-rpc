@@ -14,7 +14,7 @@ import (
 func main() {
 	startTime := time.Now()
 	const processName = "cstrike_win64.exe"
-	const engineDll = "engine.dll"
+	//const engineDll = "engine.dll"
 	const clientDll = "client.dll"
 
 	var mapName = "Placeholder"
@@ -35,11 +35,11 @@ func main() {
 
 	}
 	defer windows.CloseHandle(hProcess)
-	//engineAddr, err := utils.GetModuleBaseAddress(pid, engineDll)
+	/*engineAddr, err := utils.GetModuleBaseAddress(pid, engineDll)
 	if err != nil {
 		fmt.Println(err)
 	}
-
+	*/
 	clientAddr, err := utils.GetModuleBaseAddress(pid, clientDll)
 	if err != nil {
 		fmt.Println(err)
@@ -61,13 +61,17 @@ func main() {
 			log.Fatal(err)
 			return
 		}
-		mapVal := utils.GetValueFromAddress(hProcess, uintptr(mapNameAddress))
-		if mapVal != mapName && mapVal != "" {
+		mapVal, err := utils.GetValueFromAddress(hProcess, uintptr(mapNameAddress))
+		if err != nil {
+			log.Println("Error reading map name:", err)
+		} else if mapVal != mapName && mapVal != "" {
 			mapName = mapVal
 			shouldUpdate = true
 		}
-		serverVal := utils.GetValueFromAddress(hProcess, uintptr(serverNameAddress))
-		if serverVal != serverName && serverVal != "" {
+		serverVal, err := utils.GetValueFromAddress(hProcess, uintptr(serverNameAddress))
+		if err != nil {
+			log.Println("Error reading server name:", err)
+		} else if serverVal != serverName && serverVal != "" {
 			serverName = serverVal
 			shouldUpdate = true
 		}
